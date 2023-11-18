@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,14 +33,28 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 
-Route::get('/dashboard', function () {
-    return view('backend.backend');
-})->middleware(['auth'])->name('dashboard');
+
+// this route will use for backend part
 
 
-
-Route::get('/',function(){
-    return view('frontend.frontend');
+Route::middleware('auth')->prefix('admin')->as('admin.')->group(function () {
+    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
 });
+
+
+
+
+
+
+
+// this route will use for frontend part
+
+
+
+Route::prefix('/')->as('frontend.')->group(function () {
+    Route::get('/',[FrontendController::class,'index']);
+});
+
+
 
 // today we will learn how to customize frontend part no news portal website
