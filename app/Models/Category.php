@@ -18,4 +18,11 @@ class Category extends Model
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
+
+
+
+    protected $fillable = [
+        'name',
+        'slug'
+    ];
 }

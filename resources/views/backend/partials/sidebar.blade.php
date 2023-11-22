@@ -4,7 +4,7 @@
             <img src="{{ asset("backend") }}/assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
         </div>
         <div>
-            <h4 class="logo-text">Rocker</h4>
+            <h4 class="logo-text">News Portal</h4>
         </div>
         <div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
         </div>
@@ -26,10 +26,8 @@
                 <div class="menu-title">Categories</div>
             </a>
             <ul>
-                <li> <a href="index.html"><i class="bx bx-right-arrow-alt"></i>Default</a>
-                </li>
-                <li> <a href="index2.html"><i class="bx bx-right-arrow-alt"></i>Alternate</a>
-                </li>
+                <li> <a href="{{ route('admin.categories') }}"><i class="bx bx-right-arrow-alt"></i>Index</a></li>
+
             </ul>
         </li>
 

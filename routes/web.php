@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\ProfileController;
@@ -30,7 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 
 
@@ -38,7 +39,26 @@ require __DIR__.'/auth.php';
 
 
 Route::middleware('auth')->prefix('admin')->as('admin.')->group(function () {
-    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
+
+    Route::controller(CategoryController::class)->group(function(){
+
+        Route::get('/categories','index')->name('categories');
+
+        Route::prefix('category')->as('category.')->group(function(){
+
+
+            Route::get('/create','create')->name('create');
+            Route::post('/store','store')->name('store');
+            Route::get('/edit/{id}','edit')->name('edit');
+            Route::post('/update/{id}','update')->name('update');
+            Route::get('/destroy/{id}','destroy')->name('destroy');
+
+        });
+
+    });
 });
 
 
@@ -52,7 +72,7 @@ Route::middleware('auth')->prefix('admin')->as('admin.')->group(function () {
 
 
 Route::prefix('/')->as('frontend.')->group(function () {
-    Route::get('/',[FrontendController::class,'index']);
+    Route::get('/', [FrontendController::class, 'index']);
 });
 
 
