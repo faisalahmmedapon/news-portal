@@ -18,4 +18,20 @@ class SubCategory extends Model
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
+
+
+    protected $fillable = [
+        'name',
+        'category_id'
+    ];
+
+
+    public function category(){
+        return $this->hasOne(Category::class,'id','category_id');
+    }
+
+
+
+
+
 }

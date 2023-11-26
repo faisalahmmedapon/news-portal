@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\PostController;
+use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -42,13 +44,12 @@ Route::middleware('auth')->prefix('admin')->as('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 
-
+// all category routes
     Route::controller(CategoryController::class)->group(function(){
 
         Route::get('/categories','index')->name('categories');
 
         Route::prefix('category')->as('category.')->group(function(){
-
 
             Route::get('/create','create')->name('create');
             Route::post('/store','store')->name('store');
@@ -59,6 +60,53 @@ Route::middleware('auth')->prefix('admin')->as('admin.')->group(function () {
         });
 
     });
+
+
+
+// all sub category routes
+Route::controller(SubCategoryController::class)->group(function(){
+
+    Route::get('/sub-categories','index')->name('sub.categories');
+
+    Route::prefix('sub-category')->as('sub.category.')->group(function(){
+
+        Route::get('/create','create')->name('create');
+        Route::post('/store','store')->name('store');
+        Route::get('/edit/{id}','edit')->name('edit');
+        Route::post('/update/{id}','update')->name('update');
+        Route::get('/destroy/{id}','destroy')->name('destroy');
+
+    });
+
+});
+
+
+
+// this all routes for Posts management 
+Route::controller(PostController::class)->group(function(){
+
+    Route::get('/posts','index')->name('posts');
+
+    Route::prefix('post')->as('post.')->group(function(){
+
+        Route::get('/create','create')->name('create');
+        Route::post('/store','store')->name('store');
+        Route::get('/edit/{id}','edit')->name('edit');
+        Route::post('/update/{id}','update')->name('update');
+        Route::get('/destroy/{id}','destroy')->name('destroy');
+
+    });
+
+});
+
+
+
+
+
+
+
+
+
 });
 
 

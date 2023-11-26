@@ -21,13 +21,13 @@
         </li>
         <li>
             <a  class="has-arrow cursor-pointer">
-                <div class="parent-icon"><i class='bx bx-home-circle'></i>
-                </div>
-                <div class="menu-title">Categories</div>
+                <div class="parent-icon"><i class="fadeIn animated bx bx-repost"></i></div>
+                <div class="menu-title">Post Management</div>
             </a>
             <ul>
-                <li> <a href="{{ route('admin.categories') }}"><i class="bx bx-right-arrow-alt"></i>Index</a></li>
-
+                <li> <a href="{{ route('admin.categories') }}"><i class="bx bx-right-arrow-alt"></i>Categories</a></li>
+                <li> <a href="{{ route('admin.sub.categories') }}"><i class="bx bx-right-arrow-alt"></i>Sub Categories</a></li>
+                <li> <a href="{{ route('admin.posts') }}"><i class="bx bx-right-arrow-alt"></i> Posts </a></li>
             </ul>
         </li>
 

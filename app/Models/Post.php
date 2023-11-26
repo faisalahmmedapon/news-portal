@@ -18,4 +18,16 @@ class Post extends Model
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
+
+    protected $fillable = [
+        'meta_title',
+        'meta_keyword',
+        'meta_description',
+        'title',
+        'image',
+        'description',
+        'category_id',
+        'user_id',
+
+    ];
 }

@@ -18,24 +18,17 @@ class CategorySeeder extends Seeder
 
 
         $categories = [
-            [
-                "name"=> "Html",
-            ],
-            [
-                "name"=> "Css",
-            ],
-            [
-                "name"=> "Js",
-            ],
-            [
-                "name"=> "Json",
-            ],
-            [
-                "name"=> "Php",
-            ],
-            [
-                "name"=> "Laravel",
-            ],
+             ['name' => 'Politics',],
+             ['name' => 'Business'],
+             ['name' => 'Corporate'],
+             ['name' => 'Health'],
+             ['name' => 'Education'],
+             ['name' => 'Science'],
+             ['name' => 'Foods'],
+             ['name' => 'Business'],
+             ['name' => 'Entertainment'],
+             ['name' => 'Travel'],
+             ['name' => 'Lifestyle'],
         ];
         foreach ($categories as $category) {
             Category::updateOrCreate($category);

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -12,7 +15,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+        return view('backend.post.index', compact('posts'));
     }
 
     /**
@@ -20,15 +24,57 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('backend.post.create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
+
+    private function uploadImage($image)
+    {
+
+
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('uploaded/post'), $imageName);
+        return $imageName;
+    }
+
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'meta_title' => 'required',
+            'meta_keyword' => 'required',
+            'meta_description' => 'required',
+            'title' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'description' => 'required',
+            'category_id' => 'required',
+        ]);
+
+
+
+
+
+        $uploadedImage = $request->file('image');
+        $imageName = $this->uploadImage($uploadedImage);
+
+        Post::create([
+            'meta_title' => $request->meta_title,
+            'meta_keyword' => $request->meta_keyword,
+            'meta_description' => $request->meta_description,
+            'title' => $request->title,
+            'image' => 'uploaded/post/'.$imageName,
+            'description' => $request->description,
+            'category_id' => $request->category_id,
+            'user_id' => Auth::user()->id,
+        ]);
+
+
+
+        return redirect()->route('admin.posts');
     }
 
     /**
@@ -60,6 +106,7 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Post::findOrFail($id)->delete();
+        return redirect()->back();
     }
 }

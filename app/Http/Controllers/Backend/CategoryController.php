@@ -28,12 +28,7 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
 
-        // $category = new Category();
-        // $category->name = $request->name;
-        // $category->save();
 
-        $request->validated();
-    
         Category::create([
             'name' => $request->name,
         ]);
