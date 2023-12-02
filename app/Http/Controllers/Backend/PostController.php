@@ -55,9 +55,6 @@ class PostController extends Controller
         ]);
 
 
-
-
-
         $uploadedImage = $request->file('image');
         $imageName = $this->uploadImage($uploadedImage);
 
@@ -66,12 +63,11 @@ class PostController extends Controller
             'meta_keyword' => $request->meta_keyword,
             'meta_description' => $request->meta_description,
             'title' => $request->title,
-            'image' => 'uploaded/post/'.$imageName,
+            'image' => 'uploaded/post/' . $imageName,
             'description' => $request->description,
             'category_id' => $request->category_id,
             'user_id' => Auth::user()->id,
         ]);
-
 
 
         return redirect()->route('admin.posts');
@@ -90,7 +86,10 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+//        return  $post ;
+        $categories = Category::all();
+        return view('backend.post.edit', compact('categories', 'post'));
     }
 
     /**
@@ -98,7 +97,32 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+//        return $request->all();
+        $post = Post::findOrFail($id);
+
+        $uploadedImage = $request->file('image');
+
+        $imageName = '';
+        if ($uploadedImage) {
+            $imageName = $this->uploadImage($uploadedImage);
+            if ($imageName) {
+                @unlink($post->image);
+            }
+        }
+
+        $post->update([
+            'meta_title' => $request->meta_title,
+            'meta_keyword' => $request->meta_keyword,
+            'meta_description' => $request->meta_description,
+            'title' => $request->title,
+            'image' => $imageName ? 'uploaded/post/' . $imageName : $post->image,
+            'description' => $request->description,
+            'category_id' => $request->category_id,
+            'user_id' => Auth::user()->id,
+        ]);
+
+
+        return redirect()->route('admin.posts');
     }
 
     /**
@@ -106,7 +130,12 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        Post::findOrFail($id)->delete();
+        $post = Post::findOrFail($id);
+
+        if ($post) {
+            $post->delete();
+            @unlink($post->image);
+        }
         return redirect()->back();
     }
 }

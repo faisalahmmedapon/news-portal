@@ -5,7 +5,9 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Category;
+use App\Models\Post;
 use App\Models\User;
+use Database\Factories\PostFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,6 +24,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
+
         User::create([
             "name"=> "User",
             "email"=> "user@gmail.com",
@@ -36,6 +39,7 @@ class DatabaseSeeder extends Seeder
             PostSeeder::class,
             PostTagSeeder::class
         ]);
+        Post::factory(100)->create();
 
     }
 }
